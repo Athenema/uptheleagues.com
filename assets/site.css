@@ -1,0 +1,667 @@
+/* Up the Leagues: the launch page and the privacy page. The game's own night: its colours (app/constants/colors.ts),
+   its Archivo, its launch frame's pitch (ten stripes fanning from above the top, one floodlight, the halfway line). */
+
+@font-face {
+  font-family: Archivo;
+  src: url(archivo.woff2) format("woff2");
+  font-weight: 400 900;
+  font-stretch: 62% 100%;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: dark;
+  --bg: #0e1013;
+  --quiet: #0a110d;
+  --surface: #171a1f;
+  --surface2: #222730;
+  --line: #2a2f38;
+  --text: #f3f4f6;
+  --muted: #98a1b0;
+  --up: #34c26b;
+  --sky: #56b4e9;
+  --gold: #f5c518;
+  --chalk: rgb(255 255 255 / 0.11);
+  --gutter: 20px;
+  --fade: 2400px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  font: 400 17px/1.5 Archivo, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* the pitch: the launch frame's stripes, 4.07deg each, fanning from 400px above the top, mown out down the page */
+  background:
+    linear-gradient(180deg, rgb(10 17 13 / 0) calc(var(--fade) / 3), var(--quiet) var(--fade)),
+    repeating-conic-gradient(from 180deg at 50% -400px, rgb(255 255 255 / 0.03) 0deg 4.07deg, transparent 4.07deg 8.14deg),
+    var(--quiet);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration-color: rgb(243 244 246 / 0.4);
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  text-decoration-color: currentColor;
+}
+
+:focus-visible {
+  outline: 3px solid var(--sky);
+  outline-offset: 3px;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+p,
+li {
+  text-wrap: pretty;
+}
+
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* the app's three small-caps labels (#989): one, the eyebrow */
+.eyebrow {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+/* the app's display face: Archivo Condensed Bold, as the cards' names and the moments' lines */
+.display {
+  font-stretch: 62%;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  line-height: 1.04;
+}
+
+/* ---------- the hero: under the floodlight ---------- */
+
+.hero {
+  --halfway: 66px;
+  position: relative;
+  overflow: hidden;
+  padding: max(20px, env(safe-area-inset-top)) 0 156px;
+  background:
+    linear-gradient(180deg, rgb(14 16 19 / 0.55), rgb(14 16 19 / 0) 22%),
+    radial-gradient(ellipse 85% 46% at 50% 54%, #24603d, rgb(27 74 47 / 0.85) 30%, rgb(17 48 31 / 0.5) 62%, rgb(10 23 16 / 0) 100%);
+}
+
+/* the halfway line and the centre circle, in chalk, at the foot of the floodlit half */
+.hero::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  pointer-events: none;
+}
+
+.hero::before {
+  bottom: var(--halfway);
+  width: 100vw;
+  height: 0;
+  border-top: 1.5px solid var(--chalk);
+  transform: translateX(-50%);
+}
+
+.hero::after {
+  bottom: var(--halfway);
+  width: min(68vw, 420px);
+  aspect-ratio: 5 / 2;
+  border: 1.5px solid var(--chalk);
+  border-radius: 50%;
+  transform: translate(-50%, 50%);
+}
+
+.hero .wrap {
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+  text-align: center;
+}
+
+.lockup {
+  margin: 0;
+  width: min(76vw, 300px);
+}
+
+.lockup img {
+  width: 100%;
+  height: auto;
+}
+
+.headline {
+  margin: 2px 0 0;
+  max-width: 13em;
+  font-size: clamp(28px, 8vw, 60px);
+  text-wrap: balance;
+}
+
+.headline span {
+  color: var(--up);
+}
+
+.sub {
+  margin: -4px 0 0;
+  max-width: 22em;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.45;
+  text-wrap: balance;
+}
+
+/* the moment: a window onto the phone's screen, the signing as it plays */
+.moment {
+  position: relative;
+  margin: 2px 0 0;
+  /* the rest of the fold is the words and the button: the clip takes what's left, so the button stays in view */
+  height: clamp(196px, calc(100svh - 344px), 420px);
+  aspect-ratio: 2 / 3;
+  border: 1px solid rgb(255 255 255 / 0.08);
+  border-radius: 22px;
+  overflow: hidden;
+  background: #0b0f0d;
+  box-shadow: 0 30px 60px -20px rgb(0 0 0 / 0.7), 0 0 80px rgb(52 194 107 / 0.12);
+}
+
+.moment video,
+.moment img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.moment .still {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moment video {
+    display: none;
+  }
+
+  .moment .still {
+    display: block;
+  }
+}
+
+/* ---------- the form: one email, at launch ---------- */
+
+.signup {
+  width: 100%;
+  max-width: 420px;
+  margin: 4px 0 0;
+  display: grid;
+  gap: 8px;
+  text-align: left;
+}
+
+.signup .eyebrow {
+  text-align: center;
+  color: var(--text);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+}
+
+/* the create screen's field: a dark card, the label over the value */
+.field {
+  display: grid;
+  gap: 1px;
+  padding: 10px 16px 8px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+}
+
+.field:focus-within {
+  border-color: var(--sky);
+  box-shadow: 0 0 0 1px var(--sky);
+}
+
+.field label {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.field input {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 2px 0 4px;
+  border: 0;
+  background: none;
+  color: var(--text);
+  font: 600 19px/1.3 Archivo, system-ui, sans-serif;
+  outline: none;
+}
+
+.field input::placeholder {
+  /* 4.5:1 on the field's surface */
+  color: #7d8696;
+  opacity: 1;
+}
+
+.tick {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  padding: 0 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.tick input {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: none;
+  display: grid;
+  place-content: center;
+  width: 26px;
+  height: 26px;
+  margin: 0;
+  /* the box's edge at 3:1 or more on the lit grass (WCAG 1.4.11) */
+  border: 2px solid var(--muted);
+  border-radius: 8px;
+  background: var(--surface);
+  cursor: pointer;
+}
+
+.tick input::before {
+  content: "";
+  width: 12px;
+  height: 7px;
+  margin-top: -3px;
+  border: solid var(--bg);
+  border-width: 0 0 3px 3px;
+  transform: rotate(-45deg) scale(0);
+  transition: transform 120ms ease-out;
+}
+
+.tick input:checked {
+  border-color: var(--up);
+  background: var(--up);
+}
+
+.tick input:checked::before {
+  transform: rotate(-45deg) scale(1);
+}
+
+.tick input:focus-visible {
+  outline-offset: 2px;
+}
+
+/* the app's one primary: chalk, lit along its top, sinking to 0.97 under the thumb (#502) */
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 54px;
+  margin: 0;
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.16), rgb(255 255 255 / 0) 55%, rgb(0 0 0 / 0.14)), var(--text);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.22), inset 0 -1px 0 rgb(0 0 0 / 0.2), 0 10px 24px -12px rgb(0 0 0 / 0.8);
+  color: var(--bg);
+  font: 700 15px/1.2 Archivo, system-ui, sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 160ms cubic-bezier(0.2, 1.4, 0.4, 1), filter 120ms;
+}
+
+.button:active {
+  transform: scale(0.97);
+  filter: brightness(0.9);
+  transition-duration: 60ms;
+}
+
+.fine {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+  text-align: center;
+  text-wrap: balance;
+}
+
+/* ---------- the moments ---------- */
+
+section {
+  padding: 56px 0;
+}
+
+/* the halfway line already parts it from the hero */
+main > section:first-child {
+  padding-top: 24px;
+}
+
+.section-head {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.section-head h2 {
+  margin: 0;
+  font-size: clamp(30px, 7.4vw, 48px);
+}
+
+.lede {
+  max-width: 38em;
+  margin: 0;
+  color: #d5d9e0;
+}
+
+.section-head .eyebrow {
+  margin-top: 22px;
+}
+
+.moments {
+  display: grid;
+  gap: 36px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.moments figure {
+  margin: 0;
+}
+
+.moments img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  border: 1px solid rgb(255 255 255 / 0.08);
+  border-radius: 18px;
+  background: var(--bg);
+  box-shadow: 0 24px 48px -24px rgb(0 0 0 / 0.8);
+}
+
+.moments figcaption {
+  display: grid;
+  gap: 6px;
+  padding: 16px 4px 0;
+}
+
+.moments figcaption p {
+  margin: 0;
+  font-size: 17px;
+}
+
+/* ---------- the promises ---------- */
+
+.promises {
+  text-align: center;
+  border-top: 1px solid var(--line);
+}
+
+.promises ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 0.5em;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  font-size: clamp(38px, 11vw, 76px);
+  text-transform: uppercase;
+}
+
+.promises li:nth-child(even) {
+  color: var(--up);
+}
+
+/* two promises a line where they fit */
+.promises li:nth-child(-n + 2) {
+  order: 1;
+}
+
+.promises ul::after {
+  content: "";
+  flex-basis: 100%;
+  order: 2;
+}
+
+.promises li:nth-child(n + 3) {
+  order: 3;
+}
+
+.promises p {
+  max-width: 30em;
+  margin: 18px auto 28px;
+  color: var(--muted);
+}
+
+.promises .button {
+  width: auto;
+  min-width: 260px;
+  display: inline-flex;
+}
+
+/* ---------- the footer ---------- */
+
+footer {
+  padding: 28px 0 max(36px, env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 15px;
+}
+
+footer .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+footer img {
+  width: 172px;
+  height: auto;
+}
+
+footer nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+
+footer a {
+  display: inline-block;
+  padding: 10px 0;
+}
+
+/* ---------- the privacy page ---------- */
+
+.doc {
+  --fade: 640px;
+}
+
+.doc header .wrap,
+.doc main,
+.doc footer .wrap {
+  max-width: 744px;
+}
+
+.doc header {
+  padding: max(28px, env(safe-area-inset-top)) 0 0;
+}
+
+.doc header img {
+  width: 203px;
+  height: auto;
+}
+
+.doc main {
+  padding-top: 36px;
+  padding-bottom: 64px;
+}
+
+.doc h1 {
+  margin: 8px 0 6px;
+  font-size: clamp(40px, 10vw, 60px);
+}
+
+.doc h2 {
+  margin: 40px 0 8px;
+  font-size: 28px;
+}
+
+.doc p,
+.doc li {
+  color: #d5d9e0;
+}
+
+.doc ul {
+  padding-left: 1.2em;
+}
+
+.doc li + li {
+  margin-top: 6px;
+}
+
+.doc .summary {
+  margin: 20px 0 0;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+/* ---------- wider screens ---------- */
+
+@media (min-width: 720px) {
+  :root {
+    --gutter: 32px;
+  }
+
+  .moments {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 48px 32px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .hero {
+    --halfway: 100px;
+    padding: 56px 0 224px;
+    background:
+      linear-gradient(180deg, rgb(14 16 19 / 0.55), rgb(14 16 19 / 0) 22%),
+      radial-gradient(ellipse 52% 62% at 72% 48%, #24603d, rgb(27 74 47 / 0.85) 30%, rgb(17 48 31 / 0.5) 62%, rgb(10 23 16 / 0) 100%);
+  }
+
+  .hero .wrap {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "lockup moment"
+      "headline moment"
+      "sub moment"
+      "signup moment";
+    grid-template-rows: auto auto auto 1fr;
+    gap: 0 64px;
+    justify-items: start;
+    text-align: left;
+  }
+
+  .lockup {
+    grid-area: lockup;
+    width: 400px;
+    margin-top: 12px;
+  }
+
+  .headline {
+    grid-area: headline;
+    margin-top: 40px;
+    font-size: 64px;
+  }
+
+  .sub {
+    grid-area: sub;
+    margin-top: 18px;
+    font-size: 19px;
+  }
+
+  .moment {
+    grid-area: moment;
+    align-self: center;
+    margin: 0;
+    height: min(640px, 76vh);
+  }
+
+  .signup {
+    grid-area: signup;
+    align-self: start;
+    margin-top: 36px;
+  }
+
+  .signup .eyebrow,
+  .fine {
+    text-align: left;
+  }
+
+  /* the width of the two columns below, so the words start on the screens' left edge */
+  .section-head {
+    max-width: 976px;
+    margin-inline: auto;
+  }
+
+  .moments {
+    grid-template-columns: repeat(2, minmax(0, 440px));
+    justify-content: center;
+    gap: 64px 96px;
+  }
+
+  section {
+    padding: 80px 0;
+  }
+
+  main > section:first-child {
+    padding-top: 32px;
+  }
+}
