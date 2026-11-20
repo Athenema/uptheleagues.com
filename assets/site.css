@@ -516,6 +516,19 @@ footer a {
   padding: 10px 0;
 }
 
+/* the company line: UK law wants the company's name, number, country and registered office on its sites */
+footer .co {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+footer .co a {
+  display: inline;
+  padding: 0;
+}
+
 /* ---------- the privacy page ---------- */
 
 .doc {
